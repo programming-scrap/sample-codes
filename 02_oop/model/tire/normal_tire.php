@@ -1,6 +1,6 @@
 <?php
 
-class NormalTire extends Tire
+class NormalTire extends AbstractTire
 {
 
     function getRunnableDistance(): int

@@ -1,6 +1,6 @@
 <?php
 
-abstract class Tire
+abstract class AbstractTire
 {
     // 走行距離
     private int $driveDistance = 0;
@@ -21,6 +21,5 @@ abstract class Tire
         return true;
     }
 
-    // 残りのミゾの深さをミリメートル単位で返却します
     abstract function getRunnableDistance(): int;
 }

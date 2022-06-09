@@ -1,33 +1,21 @@
 <?php
-require_once(__dir__.'/../tire/tire.php');
+require_once(__dir__.'/../tire/abstract_tire.php');
 
 class Car
 {
     private int $driveDistance = 0;
-    private Tire $frontLeftTire;
-    private Tire $frontRightTire;
-    private Tire $backLeftTire;
-    private Tire $backRightTire;
+    private AbstractTire $tire;
 
     public function __construct(
-        Tire $frontLeftTire,
-        Tire $frontRightTire,
-        Tire $backLeftTire,
-        Tire $backRightTire
+        AbstractTire $tire,
     ) {
-        $this->frontLeftTire  = $frontLeftTire;
-        $this->frontRightTire = $frontRightTire;
-        $this->backLeftTire   = $backLeftTire;
-        $this->backRightTire  = $backRightTire;
+        $this->tire = $tire;
     }
 
     public function drive(int $distance)
     {
         $this->driveDistance += $distance;
-        $this->frontLeftTire->consume($distance);
-        $this->frontRightTire->consume($distance);
-        $this->backLeftTire->consume($distance);
-        $this->backRightTire->consume($distance);
+        $this->tire->consume($distance);
     }
 
     // 車を点検して問題がないかを調べます
@@ -45,29 +33,14 @@ class Car
     // タイヤの点検を行います
     public function checkTire(): bool
     {
-        return $this->frontLeftTire->check() &&
-            $this->frontRightTire->check() &&
-            $this->backLeftTire->check() &&
-            $this->backRightTire->check();
+        return $this->tire->check();
     }
 
-    public function changeFrontLeftTire(Tire $tire): void
+    public function changeTire(AbstractTire $tire): AbstractTire
     {
-        $this->frontLeftTire = $tire;
-    }
+        $tmp        = $this->tire;
+        $this->tire = $tire;
 
-    public function changeFrontRightTire(Tire $tire): void
-    {
-        $this->frontRightTire = $tire;
-    }
-
-    public function changeBackLeftTire(Tire $tire): void
-    {
-        $this->backLeftTire = $tire;
-    }
-
-    public function changeBackRightTire(Tire $tire): void
-    {
-        $this->backRightTire = $tire;
+        return $tmp;
     }
 }
